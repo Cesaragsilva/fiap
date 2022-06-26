@@ -22,7 +22,7 @@ pipeline{
         stage('#2 Building Dockerfile') {
             steps {
                 script {
-                    dockerapp = docker.build("cesarag92/fiap-application:${env.BUILD_ID}",
+                    dockerapp = docker.build("cesarag92/fiap-application:v${env.BUILD_ID}",
                     '-f ./Transacoes/Dockerfile ./Transacoes')
                 }
             }
@@ -44,7 +44,7 @@ pipeline{
                 script {
                         docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
                         dockerapp.push('latest')
-                        dockerapp.push('${env.BUILD_ID}') 
+                        dockerapp.push('v${env.BUILD_ID}') 
                     }
                 }
             }
