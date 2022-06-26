@@ -23,7 +23,7 @@ pipeline{
             steps {
                 script {
                     dockerapp = docker.build("cesarag92/fiap-application:${env.BUILD_ID}",
-                    '-f ./Transacoes/Dockerfile .')
+                    '-f ./Transacoes/Dockerfile ./Transacoes')
                 }
             }
             post{
