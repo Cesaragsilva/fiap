@@ -26,6 +26,39 @@ pipeline{
                     '-f ./Transacoes/Dockerfile .')
                 }
             }
+            post{
+                always{
+                    echo "========Building Dockerfile========"
+                }
+                success{
+                    echo "========executed successfully========"
+                }
+                failure{
+                    echo "========execution failed========"
+                }
+            }
+        }
+
+        stage('# Pushing image to DockerHub') {
+            steps {
+                script {
+                        docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                        dockerapp.push('latest')
+                        dockerapp.push('${env.BUILD_ID}') 
+                    }
+                }
+            }
+            post {
+                always{
+                    echo "========Pushing image to DockerHub========"
+                }
+                success{
+                    echo "========executed successfully========"
+                }
+                failure{
+                    echo "========execution failed========"
+                }
+            }
         }
     }
 }
